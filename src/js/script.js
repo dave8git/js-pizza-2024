@@ -81,6 +81,8 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      console.log('thisProduct.imageWrapper', thisProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -143,13 +145,31 @@ const select = {
         for(let optionId in param.options) {
           // determine option value, e.g. option = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          //console.log('formData', formData[paramId]);
-          //console.log('option.default or not', option.default);
           if(formData[paramId] && formData[paramId].includes(optionId) ) {
             if(!option.default) {
               price += option.price;
+              const foundElement = thisProduct.imageWrapper.querySelector(`.${paramId}-${optionId}`);
+              if(foundElement) {
+                foundElement.classList.add(classNames.menuProduct.imageVisible);
+              } 
+              //console.log('foundElement', foundElement);
+              // console.log('thisProduct.imageWrapper', thisProduct.imageWrapper);
+              // console.log(`${paramId}-${optionId}`);
+              // console.log('option', option);
+              // console.log('paramId', paramId);
+              // console.log('optionId', optionId);
+            } else if (option.default) {
+              const foundElement = thisProduct.imageWrapper.querySelector(`.${paramId}-${optionId}`);
+              if(foundElement) {
+                foundElement.classList.add(classNames.menuProduct.imageVisible);
+              } 
+            }
+          } else {
+            const foundElement = thisProduct.imageWrapper.querySelector(`.${paramId}-${optionId}`);
+            if(foundElement) {
+              foundElement.classList.remove(classNames.menuProduct.imageVisible);
             } 
-          } 
+          }
         }
       }
       // update calculate price in the HTML 
