@@ -89,6 +89,7 @@ const select = {
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget(); 
       thisProduct.processOrder(); 
+      thisProduct.prepareCartProduct();
       console.log('new Product:', thisProduct);
     }
 
@@ -151,6 +152,7 @@ const select = {
       thisProduct.dom.cartButton.addEventListener('click', function(event) {
         event.preventDefault();
         thisProduct.processOrder(); 
+        thisProduct.addToCart();
       });
       //console.log('initOrderForm');
     }
@@ -178,7 +180,7 @@ const select = {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes' ... }
         const param = thisProduct.data.params[paramId];
         //console.log(paramId, param);
-
+      
         // for every option in this category
         for(let optionId in param.options) {
           // determine option value, e.g. option = 'olives', option = { label: 'Olives', price: 2, default: true }
@@ -213,9 +215,54 @@ const select = {
       }
       // update calculate price in the HTML 
     console.log('price', price);
+    thisProduct.priceSingle = price;
     price *= thisProduct.amountWidget.value;
+    thisProduct.price = price;
     console.log('price', price);
     thisProduct.dom.priceElem.innerHTML = price; 
+    }
+    prepareCartProduct() {
+      const thisProduct = this; 
+
+      const productSummary = {};
+      productSummary.id = thisProduct.id;
+      productSummary.name = thisProduct.data.name;
+      productSummary.amount = thisProduct.amountWidget.value;
+      productSummary.priceSingle = thisProduct.priceSingle;
+      productSummary.price = thisProduct.price;
+      productSummary.params = thisProduct.prepareCartProductParams();
+      console.log('productSummary', productSummary);
+
+      return productSummary;
+    }
+    prepareCartProductParams() {
+      const thisProduct = this; 
+      const formData = utils.serializeFormToObject(thisProduct.dom.form);
+      const params = {};
+    
+      for(let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+        console.log('paramId', paramId);
+        console.log('param',param);
+        params[paramId] = {
+          label: param.label,
+          options: {},
+        };
+        for(let optionId in param.options) {
+          const option = param.options[optionId];
+          console.log('optionId', optionId);
+          console.log('option', option);
+          if(formData[paramId] && formData[paramId].includes(optionId) ) {
+            params[paramId].options[optionId] = option.label;
+          }
+        }
+      }
+      console.log('params', params); 
+      return params;
+    }
+    addToCart(){
+      const thisProduct = this;
+      app.cart.add(thisProduct.prepareCartProduct());
     }
   }
 
@@ -233,6 +280,7 @@ const select = {
       thisCart.dom = {};
       thisCart.dom.wrapper = element; 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions() {
@@ -246,11 +294,50 @@ const select = {
     initAmountWidget() {
       const thisProduct = this; 
 
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener('updated', function() {
+      thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
+      thisProduct.dom.amountWidgetElem.addEventListener('updated', function() {
         thisProduct.processOrder();
       })
     }
+    add(menuProduct) { // dzięki temu, że nową instancję tej klasy wywołujemy w obiekcie app (na dole)
+      // i zapisujemy w thisApp.cart, możemy teraz wywołać app.add w klasie Product w funkcji addToCart. 
+      const thisCart = this; 
+      console.log('adding product', menuProduct); // w metodzie add produkt (thisProduct) widoczny jest jako
+      const generatedHTML = templates.cartProduct(menuProduct);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(generatedDOM);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      console.log('thisCart.products', thisCart.products); 
+      // menuProduct
+    }
+  }
+
+  class CartProduct{
+    constructor(menuProduct, element) {
+      const thisCartProduct = this; 
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.params = menuProduct.params;
+
+      thisCartProduct.getElements(element);
+      console.log('thisCartProduct from CartProduct', thisCartProduct);
+    }
+
+    getElements(element){
+      const thisCartProduct = this; 
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element; 
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    }
+
+    
   }
 
   class amountWidget{
@@ -382,7 +469,7 @@ const select = {
       const thisApp = this;
 
       const cartElem = document.querySelector(select.containerOf.cart); 
-      thisApp.cart = new Cart(cartElem);
+      thisApp.cart = new Cart(cartElem); // zapisujemy w app.cart instację klasy Cart, możemy teraz dostać się do jej metod z innych klas przez tą zapisaną instancję
     },
     initMenu: function() {
       const thisApp = this; 
