@@ -155,7 +155,7 @@ const select = {
 
     initAmountWidget() {
       const thisProduct = this; 
-      thisProduct.amountWidget = new amountWidget(thisProduct.dom.amountWidgetElem);
+      thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
       thisProduct.dom.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
@@ -260,8 +260,9 @@ const select = {
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
-      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
+      thisCart.dom.orderTotal = thisCart.dom.wrapper.querySelector(select.cart.orderTotal);
     }
 
     initActions() {
@@ -269,7 +270,11 @@ const select = {
 
       thisCart.dom.toggleTrigger.addEventListener('click', function() {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
-      })
+      });
+
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update();
+      });
     }
 
     initAmountWidget() {
@@ -296,7 +301,7 @@ const select = {
       const deliveryFee = settings.cart.defaultDeliveryFee;
       let totalNumber = 0;
       let subtotalPrice = 0;
-
+      console.log('update ruszyło');
       for(let product of thisCart.products) {
         totalNumber += product.amount;
         subtotalPrice += product.price;
@@ -305,9 +310,11 @@ const select = {
       thisCart.totalPrice = totalNumber > 0 ? subtotalPrice + deliveryFee : 0;
       thisCart.dom.deliveryFee.innerHTML = deliveryFee;
       thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
-      thisCart.dom.totalPrice.innerHTML = subtotalPrice + deliveryFee;
-      console.log(thisCart.totalPrice);
-      
+      thisCart.dom.totalPrice.forEach(element => element.innerHTML = thisCart.totalPrice); //subtotalPrice + deliveryFee;
+      thisCart.dom.totalNumber.innerHTML = totalNumber;
+      console.log(totalNumber);
+      //thisCart.dom.orderTotal.innerHTML = thisCart.totalPrice;
+      console.log('thisCart.dom.totalPrice', thisCart.dom.totalPrice);
     }
   }
 
@@ -334,11 +341,12 @@ const select = {
       thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+      console.log('thisCartProduct.dom.wrapper', thisCartProduct.dom.wrapper);
     }
 
     initAmountWidget() {
       const thisCartProduct = this;
-      thisCartProduct.amountWidget = new amountWidget(thisCartProduct.dom.amountWidgetElem);
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidgetElem);
       thisCartProduct.dom.amountWidgetElem.addEventListener('updated', function() {
         let value = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle;
         thisCartProduct.dom.price.innerHTML = value;
@@ -347,74 +355,12 @@ const select = {
     
   }
 
-  class amountWidget{
-    constructor(element) {
-      const thisWidget = this;
-      thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value=settings.amountWidget.defaultValue);
-      thisWidget.initActions();
-    }
-
-    setValue(value) {
-      const thisWidget = this;
-
-      const newValue = parseInt(value); // input nawet o typie 'number' zawsze zwraca wartość w formacie tekstowym. 
-      // jeżeli parseInt nie będzie w stanie skonwertować tego co otrzyma zwróci null
-     
-      if(thisWidget.value !== newValue && !isNaN(newValue) && (newValue <= settings.amountWidget.defaultMax) && (newValue >= settings.amountWidget.defaultMin)) {
-        thisWidget.value = newValue;
-          thisWidget.announce();
-      } 
-      thisWidget.input.value = thisWidget.value;
-    }
-
-    getElements(element) {
-      const thisWidget = this;
-
-      thisWidget.element = element;
-      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-    }
-
-    initActions() {
-      const thisWidget = this;
-      thisWidget.input.addEventListener('change', function (event) {
-        event.preventDefault();
-        thisWidget.setValue(thisWidget.input.value);
-      });
-      
-
-      thisWidget.linkDecrease.addEventListener('click', function (event) {
-        event.preventDefault();
-        if(thisWidget.value >= 0) {
-          thisWidget.setValue(thisWidget.value-1);
-        }
-      });
-
-      thisWidget.linkIncrease.addEventListener('click', function (event) {
-        event.preventDefault();
-        if(thisWidget.value <= 9) {
-          thisWidget.setValue(thisWidget.value+1);
-        } 
-        
-      });
-    }
-
-    announce() {
-      const thisWidget = this; 
-      const event = new Event('updated', {
-        bubbles: true
-      });
-      thisWidget.element.dispatchEvent(event);
-    }
-  }
-
   class AmountWidget{
     constructor(element) {
       const thisWidget = this; 
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value);
+      //thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(thisWidget.input.value=settings.amountWidget.defaultValue);
       thisWidget.initActions();
     }
 
@@ -442,20 +388,28 @@ const select = {
 
     initActions() {
       const thisWidget = this;
-      thisWidget.input.addEventListener('change', thisWidget.setValue(thisWidget.input.value));
-      thisWidget.linkDecrease.addEventListener('click', function(e) {
-        e.preventDefault(); 
+      thisWidget.input.addEventListener('change', function() {
+        thisWidget.setValue(thisWidget.input.value);
+      })
+      thisWidget.linkDecrease.addEventListener('click', function() {
+      if(thisWidget.value >= 0) {
         thisWidget.setValue(thisWidget.value - 1);
+      }
       });
-      thisWidget.linkIncrease.addEventListener('click', function(e) {
-        e.preventDefault();
+      thisWidget.linkIncrease.addEventListener('click', function() {
+      if(thisWidget.value <= 9) {
         thisWidget.setValue(thisWidget.value + 1);
+      }
+        
       })
     }
     announce(){
       const thisWidget = this;
-
-      const event = new Event('updated');
+      // const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
+      console.log('stworzył się customEvent updated i powinno działać')
       thisWidget.element.dispatchEvent(event);
     }
   }
