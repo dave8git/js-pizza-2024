@@ -252,6 +252,8 @@ const select = {
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
+
+      console.log(element);
     }
 
     getElements(element) {
@@ -265,6 +267,7 @@ const select = {
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       thisCart.dom.orderTotal = thisCart.dom.wrapper.querySelector(select.cart.orderTotal);
+      console.log('thisCart.dom.totalNumber', thisCart.dom.totalNumber);
       //thisCart.dom.amountWidgetElem = thisCart.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       // console.log('thisCart.dom.amountWidgetElem', thisCart.dom.amountWidgetElem);
       // console.log('element', element);
@@ -308,6 +311,7 @@ const select = {
       let subtotalPrice = 0;
       console.log('update ruszyło');
       for(let product of thisCart.products) {
+        console.log('product',product);
         totalNumber += product.amount;
         subtotalPrice += product.price;
 
@@ -336,10 +340,9 @@ const select = {
       thisCartProduct.price = menuProduct.price;
       thisCartProduct.amount = menuProduct.amount;
       thisCartProduct.priceSingle = menuProduct.priceSingle; 
-
+      console.log('thisCartProduct.amount', thisCartProduct.amount);
       thisCartProduct.getElements(element); 
       thisCartProduct.initAmountWidget();
-      thisCartProduct.initActions(); 
     }
 
     getElements(element) {// czyli selektory działają na elemencie poszczególnego produktu
@@ -350,38 +353,20 @@ const select = {
       thisCartProduct.dom.price = element.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = element.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = element.querySelector(select.cartProduct.remove);
+    
+      console.log('element',element);
     }
 
     initAmountWidget() {
       const thisCartProduct = this;
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidgetElem); //tworzymy nową instancję amountWidget 
       thisCartProduct.dom.amountWidgetElem.addEventListener('click', function () {
+        console.log('thisCartProduct.amountWidget.value', thisCartProduct.amountWidget.value);
         //thisCartProduct.amount = thisCartProduct.amountWidget.value; // korzystamy z nowej instancji amountWidget
         thisCartProduct.price = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle;
+        thisCartProduct.amount = thisCartProduct.amountWidget.value; // odczytujemy sobie z instancji amountWidget którą utworzyliśmy wcześniej new AmountWidget(....)
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
-    }
-
-    initActions() {
-      const thisCartProduct = this;
-      // thisCartProduct.dom.edit.addEventListener({
-
-      // });
-      thisCartProduct.dom.remove.addEventListener('click', function (e){
-        e.preventDefault();
-        thisCartProduct.remove(e.detail.cartProduct);
-      });
-    }
-    remove() {
-      const thisCartProduct = this;
-      const event = new CustomEvent('remove', {
-        bubbles: true,
-        detail: {
-          cartProduct: thisCartProduct,
-        },
-      });
-
-      thisCartProduct.dom.wrapper.dispatchEvent(event);
     }
   }
   class AmountWidget{
@@ -410,12 +395,12 @@ const select = {
       const newValue = parseInt(value);
       console.log(thisWidget.value);
 
-      //if(thisWidget.value !== newValue && newValue && !isNaN(newValue)) {
+      if(thisWidget.value !== newValue && !isNaN(newValue)) {
         if(newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
           thisWidget.value = newValue;
           thisWidget.announce();
         }
-      //}
+      }
       /* TODO: Add validation */ 
       thisWidget.input.value = thisWidget.value;
     }
