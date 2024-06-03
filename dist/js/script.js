@@ -273,6 +273,14 @@ const select = {
       // console.log('element', element);
     }
 
+    remove(cartProduct) {
+      const thisCart = this;
+      cartProduct.dom.wrapper.remove();
+      const productIndex = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(productIndex, 1);
+      thisCart.update();
+    };
+
     initActions() {
       const thisCart = this; 
 
@@ -282,6 +290,10 @@ const select = {
 
       thisCart.dom.productList.addEventListener('updated', function(){
         thisCart.update();
+      });
+
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        thisCart.remove(event.detail.cartProduct);
       });
     }
 
@@ -343,6 +355,7 @@ const select = {
       console.log('thisCartProduct.amount', thisCartProduct.amount);
       thisCartProduct.getElements(element); 
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions(); 
     }
 
     getElements(element) {// czyli selektory działają na elemencie poszczególnego produktu
@@ -360,12 +373,33 @@ const select = {
     initAmountWidget() {
       const thisCartProduct = this;
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidgetElem); //tworzymy nową instancję amountWidget 
-      thisCartProduct.dom.amountWidgetElem.addEventListener('click', function () {
+      thisCartProduct.dom.amountWidgetElem.addEventListener('updated', function () {
         console.log('thisCartProduct.amountWidget.value', thisCartProduct.amountWidget.value);
         //thisCartProduct.amount = thisCartProduct.amountWidget.value; // korzystamy z nowej instancji amountWidget
         thisCartProduct.price = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle;
         thisCartProduct.amount = thisCartProduct.amountWidget.value; // odczytujemy sobie z instancji amountWidget którą utworzyliśmy wcześniej new AmountWidget(....)
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });
+    }
+    remove() {
+      const thisCartProduct = this; 
+
+      const event = new CustomEvent('remove', {
+        bubbles: true, 
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+    }
+    initActions() {
+      const thisCartProduct = this;
+      thisCartProduct.dom.edit.addEventListener('click', function (event) {
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisCartProduct.remove();
       });
     }
   }
