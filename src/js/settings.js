@@ -88,7 +88,7 @@ export const classNames = {
 };
 
 export const settings = {
-    hourse: {
+    hours: {
         open: 12, 
         close: 24,
     },

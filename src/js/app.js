@@ -97,11 +97,12 @@ const app = {
       console.log('thisApp.data', thisApp.data);
     },
     initBooking: function() {
-      const thisApp = this;
+      // thisApp = this;
 
       const bookingContainer = document.querySelector(select.containerOf.booking);
       console.log(bookingContainer);
-      const booking = new Booking(bookingContainer); 
+      const booking = new Booking(bookingContainer);
+      console.log(booking);
     },
     init: function() {
       const thisApp = this;
