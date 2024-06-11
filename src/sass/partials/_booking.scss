@@ -173,6 +173,9 @@
         }
   
       }
+      &.selected {
+        border: 2px red solid;
+      }
     }
   
     [data-table="1"] {
