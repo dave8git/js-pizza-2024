@@ -93,7 +93,6 @@ class Booking {
     makeBooked(date, hour, duration, table) {
         const thisBooking = this; 
 
-      
         const startHour = utils.hourToNumber(hour);
         if(typeof thisBooking.booked[date] == 'undefined') {
             thisBooking.booked[date] = {};
@@ -217,19 +216,23 @@ class Booking {
         console.log('thisBooking', thisBooking);
         console.log('sendBooking ruszyło');
         const url = settings.db.url + '/' + settings.db.bookings;
+        // const ppl = parseInt(thisBooking.dom.peopleAmount.querySelector('input').value);
+        // const duration = parseInt(thisBooking.dom.hoursAmount.querySelector('input').value);
+        // console.log('thisBooking.dom.hoursAmount.input', thisBooking.dom.hoursAmount.input);
         const starters = [];
         console.log('url', url);
 
         const payload = {
-            address: thisBooking.date,
-            hour: thisBooking.datePicker.correctValue,
+            date: thisBooking.datePicker.correctValue,
+            hour: thisBooking.hourPicker.correctValue,
             table: parseInt(thisBooking.tableId) || null,
-            duration: thisBooking.dom.hoursAmount.value,
-            ppl: thisBooking.dom.peopleAmount.value,
-            starters: [],
+            duration: thisBooking.hoursAmountWidget.value,
+            ppl: thisBooking.peopleAmountWidget.value,
+            starters: starters,
             phone: thisBooking.dom.phone,
             address: thisBooking.dom.address,
         }
+        console.log('thisBooking.dom.hoursAmount.value', thisBooking.dom.hoursAmount.input);
 
         for(let starter of thisBooking.dom.starters) {
             console.log(starter.checked);
@@ -252,6 +255,9 @@ class Booking {
               console.log('response', response);
               return response.json();
             }).then(function(parsedResponse){
+                console.log('payload.table', payload.table);
+                thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+                thisBooking.updateDOM();
               console.log('parsedResponse', parsedResponse);
             })
 
