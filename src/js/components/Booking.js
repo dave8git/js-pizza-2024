@@ -258,6 +258,7 @@ class Booking {
                 console.log('payload.table', payload.table);
                 thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
                 thisBooking.updateDOM();
+                thisBooking.resetSelectedTable()
               console.log('parsedResponse', parsedResponse);
             })
 
