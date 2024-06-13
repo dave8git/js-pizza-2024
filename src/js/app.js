@@ -2,6 +2,7 @@ import {settings, select, classNames, templates} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js'; // tylko domyślnie exportowany element, klasa, obiekt, może być importowany bez zastosowania nawiasów klamrowych. 
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 const app = {
     initPages: function() {
       const thisApp = this; 
@@ -81,6 +82,18 @@ const app = {
       //const data = dataSource;
       thisApp.data = {};
       const url = settings.db.url + '/' + settings.db.products;
+      const home = settings.db.url + '/' + settings.db.home;
+      fetch(home)
+        .then(function(rawResponse) {
+          return rawResponse.json();
+        })
+        .then(function(parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+
+          thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
+          thisApp.initHome();
+          console.log('thisApp.data.home', thisApp.data.home);
+        });
 
       fetch(url)
         .then(function(rawResponse) {
@@ -94,7 +107,7 @@ const app = {
           thisApp.initMenu();/* execute initMenu method */
         });
 
-      console.log('thisApp.data', thisApp.data);
+      console.log('thisApp.data', thisApp.data.images);
     },
     initBooking: function() {
       // thisApp = this;
@@ -103,6 +116,13 @@ const app = {
       console.log(bookingContainer);
       const booking = new Booking(bookingContainer);
       console.log(booking);
+    },
+
+    initHome: function() {
+      const thisApp = this;
+      //new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+      thisApp.home = new Home(thisApp.data.home);
+      console.log('thisApp.home', thisApp.home);
     },
     init: function() {
       const thisApp = this;

@@ -266,5 +266,13 @@
             "ppl": 3,
             "starters": ["lemonWater"]
           }
+      ],
+      "home": [
+         {
+            "images":[
+               "<img class=\"active\" src=\"images/home/1.jpg\">",
+               "<img class=\"active\" src=\"images/home/2.jpg\">"
+          ]
+         }
       ]
  }

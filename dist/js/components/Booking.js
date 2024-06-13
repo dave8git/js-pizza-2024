@@ -158,7 +158,6 @@ class Booking {
         thisBooking.dom.phone = thisBooking.wrapper.querySelector(select.booking.phone);
         thisBooking.dom.address = thisBooking.wrapper.querySelector(select.booking.address);
         thisBooking.dom.starters = thisBooking.wrapper.querySelectorAll(select.booking.starters);
-        console.log('generatedHTML from booking', generatedHTML);
     }
 
     initWidgets() {
