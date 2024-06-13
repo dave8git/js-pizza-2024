@@ -53,6 +53,11 @@ Handlebars.registerHelper('joinValues', function(input, options) {
   return Object.values(input).join(options.fn(this));
 });
 
+Handlebars.registerHelper('log', function(context) {
+  console.log('context', context);
+  return context;
+});
+
 utils.queryParams = function(params){
   return Object.keys(params)
     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))

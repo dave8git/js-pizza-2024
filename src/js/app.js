@@ -8,15 +8,13 @@ const app = {
       const thisApp = this; 
 
       thisApp.pages = document.querySelector(select.containerOf.pages).children;
-      console.log('thisApp.pages', thisApp.pages);
+
       thisApp.navLinks = document.querySelectorAll(select.nav.links);
-      console.log('thisApp.navLinks', thisApp.navLinks);
+
       let pageMatchingHash =  thisApp.pages[0].id; 
       const idFromHash = window.location.hash;
 
       for(let page of thisApp.pages) {
-        console.log('pages.id', page.id);
-        console.log('pageMatchingHash', pageMatchingHash);
         if(page.id == idFromHash) {
           pageMatchingHash = page.id;
           break; 
@@ -32,7 +30,6 @@ const app = {
           /* get page id from href attribute */
           const id = clickedElement.getAttribute('href').replace('#', '');
           /* run thisApp.activatePage with that id */
-          console.log('id', id);
           thisApp.activatePage(id);
           /* channge URL hash */
           window.location.hash = '#/' + id;
@@ -83,16 +80,15 @@ const app = {
       thisApp.data = {};
       const url = settings.db.url + '/' + settings.db.products;
       const home = settings.db.url + '/' + settings.db.home;
+
       fetch(home)
         .then(function(rawResponse) {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
-          console.log('parsedResponse', parsedResponse);
 
           thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
           thisApp.initHome();
-          console.log('thisApp.data.home', thisApp.data.home);
         });
 
       fetch(url)
@@ -100,29 +96,27 @@ const app = {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
-          console.log('parsedResponse', parsedResponse);
 
           thisApp.data.products = parsedResponse; /* save parsedResponse as thisApp.data.products */
 
           thisApp.initMenu();/* execute initMenu method */
         });
 
-      console.log('thisApp.data', thisApp.data.images);
     },
     initBooking: function() {
       // thisApp = this;
 
       const bookingContainer = document.querySelector(select.containerOf.booking);
-      console.log(bookingContainer);
       const booking = new Booking(bookingContainer);
-      console.log(booking);
+
     },
 
     initHome: function() {
       const thisApp = this;
+      console.log('thisApp.home', thisApp.data.home);
       //new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       thisApp.home = new Home(thisApp.data.home);
-      console.log('thisApp.home', thisApp.home);
+      
     },
     init: function() {
       const thisApp = this;

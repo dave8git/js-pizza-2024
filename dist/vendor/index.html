@@ -82,11 +82,9 @@
     <div class="content-wrapper">
         <div class="picturelink-section">
             {{#each home}}
-                <div class="item">
-                    <h2>{{title}}</h2>
-                    <p>{{description}}</p>
-                    <img src="{{imageUrl}}" alt="{{title}}">
-                </div>
+                {{#each images}}
+                    {{{log this}}}
+                {{/each}}
             {{/each}}
         </div>
     </div>

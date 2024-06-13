@@ -268,11 +268,25 @@
           }
       ],
       "home": [
-         {
-            "images":[
-               "<img class=\"active\" src=\"images/home/1.jpg\">",
-               "<img class=\"active\" src=\"images/home/2.jpg\">"
-          ]
+         { 
+             "title": "Item 1",
+             "description": "Description of item 1",
+             "imageUrl": "https://example.com/image1.jpg"
+         },
+         { 
+             "title": "Item 2",
+             "description": "Description of item 2",
+             "imageUrl": "https://example.com/image2.jpg"
+         },
+         { 
+             "title": "Item 3",
+             "description": "Description of item 3",
+             "imageUrl": "https://example.com/image3.jpg"
          }
-      ]
+     ]
+     
+  
+     
  }
+
+ 
