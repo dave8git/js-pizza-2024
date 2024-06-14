@@ -79,10 +79,9 @@
   </div>
 
   <script id="template-home" type="text/x-handlebars-template">
-    <div class="content-wrapper">
-        <div class="picturelink-section">
+        <div class="image-section-container">
             {{#each home}}
-                <div class="item">
+                <div class="image-container">
                     <img src="{{imageUrl}}" alt="{{title}}">
                     <div class="image-overlay">
                       <div class="image-text">{{imageText}}</div>
@@ -90,7 +89,6 @@
                 </div>
             {{/each}}
         </div>
-    </div>
 </script>
 
   <script id="template-cart-product" type="text/x-handlebars-template">

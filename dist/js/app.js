@@ -13,7 +13,7 @@ const app = {
 
       let pageMatchingHash =  thisApp.pages[0].id; 
       const idFromHash = window.location.hash;
-
+      console.log(pageMatchingHash);
       for(let page of thisApp.pages) {
         if(page.id == idFromHash) {
           pageMatchingHash = page.id;
@@ -87,9 +87,8 @@ const app = {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
-          console.log('parsedResponse', parsedResponse);
           thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
-          //thisApp.initHome();
+          thisApp.initHome(thisApp.data.home);
         });
 
       fetch(url)
@@ -102,7 +101,6 @@ const app = {
           //thisApp.home = thisApp.data["home"];
           
           thisApp.initMenu();/* execute initMenu method */
-          thisApp.initHome();
         });
 
     },
@@ -111,7 +109,7 @@ const app = {
 
       const bookingContainer = document.querySelector(select.containerOf.booking);
       const booking = new Booking(bookingContainer);
-
+      console.log(booking);
     },
 
     initHome: function() {

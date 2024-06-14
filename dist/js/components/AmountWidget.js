@@ -32,6 +32,7 @@ class AmountWidget extends BaseWidget{
       const thisWidget = this;
 
       //thisWidget.dom.wrapper = element;
+      console.log('thisWidget.dom.wrapper.querySelector(select.widgets.amount.input)', thisWidget.dom.wrapper.querySelector(select.widgets.amount.input))
       thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
       thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);

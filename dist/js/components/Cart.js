@@ -23,6 +23,7 @@ class Cart{
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
       thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
       thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+      console.log('thisCart.dom.totalNumber', thisCart.dom.totalNumber);
       //thisCart.dom.amountWidgetElem = thisCart.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       // console.log('thisCart.dom.amountWidgetElem', thisCart.dom.amountWidgetElem);
       // console.log('element', element);
@@ -83,6 +84,7 @@ class Cart{
       };
       fetch(url, options)
         .then(function(response){
+          console.log('response', response);
           return response.json();
         }).then(function(parsedResponse){
           console.log('parsedResponse', parsedResponse);

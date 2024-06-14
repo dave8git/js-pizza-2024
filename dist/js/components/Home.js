@@ -1,12 +1,5 @@
-import { select, templates } from '../settings.js';
+import { select } from '../settings.js';
 import utils from '../utils.js';
-
-Handlebars.registerHelper('log', function(context) {
-    console.log('Handlebars log:', context);
-    return context;
-});
-
-
 
 class Home {
     constructor(data) {
@@ -43,9 +36,9 @@ class Home {
         const generatedHTML = template(data);
         console.log('generatedHTML', generatedHTML);
         thisHome.generatedHome = utils.createDOMFromHTML(generatedHTML);
-        // const homeContainer = document.querySelector(select.containerOf.home);
-        // console.log('homeContainer', homeContainer);
-        // homeContainer.appendChild(this.generatedHome);
+        const homeContainer = document.querySelector(select.containerOf.home);
+        console.log('homeContainer', homeContainer);
+        homeContainer.appendChild(thisHome.generatedHome);
     }
 }
 
