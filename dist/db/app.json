@@ -280,33 +280,27 @@
    "home": {
       "gallery": [
          {
-            "title": "Beautiful Sunset",
-            "description": "A breathtaking view of the sunset over the mountains.",
+            "title": "computer parts",
             "imageUrl": "/images/home/6.jpg"
          },
          {
-            "title": "City Skyline",
-            "description": "The city skyline illuminated at night.",
+            "title": "electronic parts",
             "imageUrl": "/images/home/7.jpg"
          },
          {
-            "title": "Forest Path",
-            "description": "A serene path through a lush forest.",
+            "title": "electronic parts",
             "imageUrl": "/images/home/8.jpg"
          },
          {
-            "title": "Beautiful Sunset",
-            "description": "A breathtaking view of the sunset over the mountains.",
+            "title": "Beauelectronic parts",
             "imageUrl": "/images/home/9.jpg"
          },
          {
-            "title": "City Skyline",
-            "description": "The city skyline illuminated at night.",
+            "title": "electronic parts",
             "imageUrl": "/images/home/10.jpg"
          },
          {
-            "title": "Forest Path",
-            "description": "A serene path through a lush forest.",
+            "title": "electronic parts",
             "imageUrl": "/images/home/11.jpg"
          }
       ],
@@ -314,13 +308,13 @@
          {
             "imageUrl": "/images/home/1.jpg",
             "link": "#order",
-            "title": "City Skyline",
+            "title": "electronic parts",
             "imageText": "Nice CPU!"
          },
          {
             "imageUrl": "/images/home/2.jpg",
             "link": "#booking",
-            "title": "City Skyline",
+            "title": "electronic parts",
             "imageText": "The CPU!"
          }
       ],
