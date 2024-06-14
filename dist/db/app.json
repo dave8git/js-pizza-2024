@@ -282,44 +282,66 @@
          {
             "title": "Beautiful Sunset",
             "description": "A breathtaking view of the sunset over the mountains.",
-            "imageUrl": "https://example.com/sunset.jpg"
+            "imageUrl": "/images/home/6.jpg"
          },
          {
             "title": "City Skyline",
             "description": "The city skyline illuminated at night.",
-            "imageUrl": "https://example.com/city.jpg"
+            "imageUrl": "/images/home/7.jpg"
          },
          {
             "title": "Forest Path",
             "description": "A serene path through a lush forest.",
-            "imageUrl": "https://example.com/forest.jpg"
+            "imageUrl": "/images/home/8.jpg"
          },
          {
             "title": "Beautiful Sunset",
             "description": "A breathtaking view of the sunset over the mountains.",
-            "imageUrl": "https://example.com/sunset.jpg"
+            "imageUrl": "/images/home/9.jpg"
          },
          {
             "title": "City Skyline",
             "description": "The city skyline illuminated at night.",
-            "imageUrl": "https://example.com/city.jpg"
+            "imageUrl": "/images/home/10.jpg"
          },
          {
             "title": "Forest Path",
             "description": "A serene path through a lush forest.",
-            "imageUrl": "https://example.com/forest.jpg"
+            "imageUrl": "/images/home/11.jpg"
          }
       ],
       "home": [
          {
             "imageUrl": "/images/home/1.jpg",
+            "link": "#order",
             "title": "City Skyline",
             "imageText": "Nice CPU!"
          },
          {
             "imageUrl": "/images/home/2.jpg",
+            "link": "#booking",
             "title": "City Skyline",
             "imageText": "The CPU!"
+         }
+      ],
+      "slides": [
+         {
+            "classImg": "imgCarousel-1",
+            "title": "Smaczna i gorąca pizza!",
+            "description": "Pizza po którą warto ustawić się w kolejce!",
+            "author": "SMK jr."
+         },
+         {
+            "classImg": "imgCarousel-2",
+            "title": "Smaczna i gorąca pizza!",
+            "description": "Pizza po którą warto ustawić się w kolejce!",
+            "author": "SMK jr."
+         },
+         {
+            "classImg": "imgCarousel-3",
+            "title": "Smaczna i gorąca pizza!",
+            "description": "Pizza po którą warto ustawić się w kolejce!",
+            "author": "SMK jr."
          }
       ]
    }

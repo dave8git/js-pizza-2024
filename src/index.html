@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext"
     rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
   <link rel="stylesheet" href="./vendor/range-slider.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -68,7 +70,7 @@
   <!-- <div id="product-list" class="product-list container"></div> -->
   <div id="pages">
     <section id="home">
-      <div class="home-wrapper container"></div>
+      <div class="home-wrapper"></div>
     </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
@@ -79,16 +81,58 @@
   </div>
 
   <script id="template-home" type="text/x-handlebars-template">
-        <div class="image-section-container">
-            {{#each home}}
-                <div class="image-container">
-                    <img src="{{imageUrl}}" alt="{{title}}">
-                    <div class="image-overlay">
-                      <div class="image-text">{{imageText}}</div>
-                    </div>
+    <div class="home-container">
+      <div class="image-section-container">
+        {{#each home}}
+            <a href={{link}} class="image-container">
+                <img src="{{imageUrl}}" alt="{{title}}">
+                <div class="image-overlay">
+                  <div class="image-text">{{imageText}}</div>
                 </div>
-            {{/each}}
+              </a>
+        {{/each}}
+    </div>
+    <div>
+      <div class="bannerContainer">
+        <div class="topBannerContainer">
+         
+         
+     
+            <div class="bannerHours">
+                <h1>OPENING HOURS:</h1>
+                <h3>MON - SUN, 12PM - 11PM</h3>
+            </div>
+        
+      </div>
+    <div class="carousel-wrapper">
+      {{#each slides}}
+        <div class="carousel-cell">
+          <div class="{{ classImg }}">
+
+          </div>
+          <div class="carousel-text">
+            <h5>{{ title }}</h5>
+            <p>{{ description }}</p>
+            <p>{{ author }}</p>
+          </div>
         </div>
+      {{/each}}
+  </div>
+  <div class="gallery-wrapper">
+      {{#each gallery}}
+          <div class="gallery-item">
+              <img src="{{imageUrl}}" alt="{{title}}">
+              <div class="overlay">
+                  <i class="fas fa-search icon"></i>
+                  <i class="fas fa-heart icon"></i>
+              </div>
+          </div>
+      {{/each}}
+
+  </div>
+    </div>
+     
+        
 </script>
 
   <script id="template-cart-product" type="text/x-handlebars-template">
@@ -265,6 +309,7 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="./vendor/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
