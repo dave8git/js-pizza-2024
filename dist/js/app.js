@@ -82,15 +82,15 @@ const app = {
       const url = settings.db.url + '/' + settings.db.products;
       const home = settings.db.url + '/' + settings.db.home;
 
-      // fetch(home)
-      //   .then(function(rawResponse) {
-      //     return rawResponse.json();
-      //   })
-      //   .then(function(parsedResponse) {
+      fetch(home)
+        .then(function(rawResponse) {
+          return rawResponse.json();
+        })
+        .then(function(parsedResponse) {
 
-      //     thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
-      //     //thisApp.initHome();
-      //   });
+          thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
+          //thisApp.initHome();
+        });
 
       fetch(url)
         .then(function(rawResponse) {
@@ -100,8 +100,7 @@ const app = {
 
           thisApp.data.products = parsedResponse; /* save parsedResponse as thisApp.data.products */
           //thisApp.home = thisApp.data["home"];
-          console.log('działa nie działa', thisApp.data);
-          console.log('dziala home!', thisApp.data["home"]);
+          
           thisApp.initMenu();/* execute initMenu method */
           thisApp.initHome();
         });
@@ -120,7 +119,7 @@ const app = {
       //console.log('thisApp.home', thisApp.data.home);
       //new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       
-      thisApp.home = new Home(thisApp.home);
+      thisApp.home = new Home(thisApp.data.home);
       
     },
     init: function() {
