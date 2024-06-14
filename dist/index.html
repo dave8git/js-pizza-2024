@@ -83,9 +83,10 @@
         <div class="picturelink-section">
             {{#each home}}
                 <div class="item">
-                    <h2>{{title}}</h2>
-                    <p>{{description}}</p>
                     <img src="{{imageUrl}}" alt="{{title}}">
+                    <div class="image-overlay">
+                      <div class="image-text">{{imageText}}</div>
+                    </div>
                 </div>
             {{/each}}
         </div>

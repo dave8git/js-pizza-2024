@@ -87,7 +87,7 @@ const app = {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
-
+          console.log('parsedResponse', parsedResponse);
           thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
           //thisApp.initHome();
         });
@@ -118,7 +118,7 @@ const app = {
       const thisApp = this;
       //console.log('thisApp.home', thisApp.data.home);
       //new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      
+      console.log('thisApp.data.home from app.js', thisApp.data.home);
       thisApp.home = new Home(thisApp.data.home);
       
     },

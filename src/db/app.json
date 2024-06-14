@@ -312,14 +312,14 @@
       ],
       "home": [
          {
+            "imageUrl": "/images/home/1.jpg",
             "title": "City Skyline",
-            "imageText": "The city.",
-            "imageUrl": "/images/home/1.jpg"
+            "imageText": "The city."
          },
          {
-            "title": "Forest Path",
-            "imageText": "A serene.",
-            "imageUrl": "/images/home/2.jpg"
+            "imageUrl": "/images/home/1.jpg",
+            "title": "City Skyline",
+            "imageText": "The city."
          }
       ]
    }
