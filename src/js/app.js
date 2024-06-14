@@ -72,6 +72,7 @@ const app = {
         new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
         //new Product(productData, thisApp.data.products[productData]); // 1. przekazujemy nazwę (np. cake) jako pierwszy argument
         // 2. przekazujemy cały obiekt thisApp.data.products[productData]
+        console.log('thisApp.data.products[productData]', thisApp.data.products[productData]);
       }
     },
     initData: function() {
@@ -81,15 +82,15 @@ const app = {
       const url = settings.db.url + '/' + settings.db.products;
       const home = settings.db.url + '/' + settings.db.home;
 
-      fetch(home)
-        .then(function(rawResponse) {
-          return rawResponse.json();
-        })
-        .then(function(parsedResponse) {
+      // fetch(home)
+      //   .then(function(rawResponse) {
+      //     return rawResponse.json();
+      //   })
+      //   .then(function(parsedResponse) {
 
-          thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
-          thisApp.initHome();
-        });
+      //     thisApp.data.home = parsedResponse; /* save parsedResponse as thisApp.data.products */
+      //     //thisApp.initHome();
+      //   });
 
       fetch(url)
         .then(function(rawResponse) {
@@ -98,8 +99,11 @@ const app = {
         .then(function(parsedResponse) {
 
           thisApp.data.products = parsedResponse; /* save parsedResponse as thisApp.data.products */
-
+          //thisApp.home = thisApp.data["home"];
+          console.log('działa nie działa', thisApp.data);
+          console.log('dziala home!', thisApp.data["home"]);
           thisApp.initMenu();/* execute initMenu method */
+          thisApp.initHome();
         });
 
     },
@@ -113,9 +117,10 @@ const app = {
 
     initHome: function() {
       const thisApp = this;
-      console.log('thisApp.home', thisApp.data.home);
+      //console.log('thisApp.home', thisApp.data.home);
       //new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      thisApp.home = new Home(thisApp.data.home);
+      
+      thisApp.home = new Home(thisApp.home);
       
     },
     init: function() {
