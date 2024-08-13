@@ -1,6 +1,7 @@
 import { select } from '../settings.js';
 import utils from '../utils.js';
 //import Flickity from 'flickity';
+/* global Flickity */
 
 class Home {
     constructor(data) {
